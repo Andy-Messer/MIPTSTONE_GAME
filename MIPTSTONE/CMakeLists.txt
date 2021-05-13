@@ -6,20 +6,16 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
 
-configure_file("src/Units/prepods.txt" "${PROJECT_SOURCE_DIR}/bin/prepods.txt")
+set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_STANDARD 20)
+configure_file("card_database.txt" "${PROJECT_SOURCE_DIR}/bin/card_database.txt")
 
-include_directories(include/Units)
-include_directories(include/menu)
-include_directories(include/Stub)
-include_directories(include/Card)
-include_directories(include/Interaction)
+include_directories(src/Game-core)
+include_directories(src/UI)
+add_subdirectory(src/Game-core)
+add_subdirectory(src/UI)
+add_executable(MIPTSTONE src/main.cpp)
 
-add_executable(MIPTSTONE home/main.cpp)
+execute_process(COMMAND python3 base_parse.py WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
 
-
-
-add_subdirectory(src)
-
-target_link_libraries(MIPTSTONE CardsLib Comm_wth_user CardPrintLib LogosLib StubLib)
+target_link_libraries(MIPTSTONE Menu Cards_lib game Card_structure Card_print)
