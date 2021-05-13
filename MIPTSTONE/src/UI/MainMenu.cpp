@@ -117,6 +117,7 @@ void game::Menu::command_handler(lib_cards &lib) {
                 break;
             case 1:
                 print_card(lib);
+		sleep(10);
                 break;
             case 2:
                 escape();
